@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-01-17
+## [1.0.0] - 2026-01-17
 
 ### Added
 
-- Initial release
+- Initial stable release
 - `notesctl export` command to export notes to Markdown files
 - `notesctl list-notes` command to list notes in the database
 - `notesctl list-folders` command to list folders
@@ -34,5 +34,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Original Notes database is never modified
 - All queries validated to be SELECT statements only
 
-[Unreleased]: https://github.com/jwmoss/notesctl/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/jwmoss/notesctl/releases/tag/v0.1.0
+[Unreleased]: https://github.com/jwmoss/notesctl/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/jwmoss/notesctl/releases/tag/v1.0.0
