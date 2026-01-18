@@ -1,0 +1,116 @@
+// Apple Notes Protobuf Schema
+// Based on research from apple_cloud_notes_parser and forensic analysis
+// Reference: https://ciofecaforensics.com/2020/09/18/apple-notes-revisited-protobuf/
+
+syntax = "proto2";
+
+package notestore;
+
+// Main document structure
+message NoteStoreProto {
+  required Document document = 2;
+}
+
+// Document container
+message Document {
+  required Note note = 3;
+}
+
+// Note content
+message Note {
+  required string note_text = 2;
+  repeated AttributeRun attribute_run = 5;
+}
+
+// Text attribute run - defines formatting for a range of text
+message AttributeRun {
+  required int32 length = 1;
+
+  // Paragraph style
+  optional ParagraphStyle paragraph_style = 2;
+
+  // Font info
+  optional Font font = 3;
+
+  // Font weight (bold)
+  optional int32 font_weight = 5;
+
+  // Underline
+  optional int32 underlined = 6;
+
+  // Strikethrough
+  optional int32 strikethrough = 7;
+
+  // Superscript (positive) or subscript (negative)
+  optional int32 superscript = 8;
+
+  // Link URL
+  optional string link = 9;
+
+  // Text color
+  optional Color color = 10;
+
+  // Attachment info
+  optional AttachmentInfo attachment_info = 12;
+}
+
+// Paragraph style
+message ParagraphStyle {
+  // Style type
+  optional int32 style_type = 1;
+
+  // Alignment: 0=left, 1=center, 2=right, 3=justify
+  optional int32 alignment = 2;
+
+  // Indent level (for lists)
+  optional int32 indent_amount = 4;
+
+  // Checklist info
+  optional Checklist checklist = 5;
+
+  // Block quote
+  optional int32 block_quote = 6;
+}
+
+// Checklist item
+message Checklist {
+  // UUID for the checklist item
+  optional bytes uuid = 1;
+
+  // Whether the item is checked (done)
+  optional int32 done = 2;
+}
+
+// Font information
+message Font {
+  optional string font_name = 1;
+  optional float point_size = 2;
+  optional int32 font_hints = 3;
+}
+
+// Color information
+message Color {
+  optional float red = 1;
+  optional float green = 2;
+  optional float blue = 3;
+  optional float alpha = 4;
+}
+
+// Attachment reference
+message AttachmentInfo {
+  // Attachment identifier (links to database)
+  optional string attachment_identifier = 1;
+
+  // Type UTI
+  optional string type_uti = 2;
+}
+
+// Style type constants (for reference)
+// 0 = Title
+// 1 = Heading
+// 2 = Subheading
+// 4 = Monospaced
+// 100 = Dotted list (bullet)
+// 101 = Dashed list
+// 102 = Numbered list
+// 103 = Checklist
