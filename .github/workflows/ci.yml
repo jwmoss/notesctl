@@ -44,7 +44,7 @@ jobs:
         run: uv sync --all-extras
 
       - name: Run type checker
-        run: uv run mypy src/notesctl/
+        run: uv run ty check
 
   lint:
     runs-on: ubuntu-latest
