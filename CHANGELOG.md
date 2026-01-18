@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-01-17
+
+### Fixed
+
+- Fixed duplicate title headers appearing in exported markdown files
+- Apple Notes stores the note title as the first paragraph with `StyleType.TITLE`, causing the title to render twice when `include_title_heading` is enabled
+- Skip the first paragraph when it matches the note title to eliminate duplication
+
 ## [1.0.1] - 2026-01-17
 
 ### Fixed
@@ -42,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Original Notes database is never modified
 - All queries validated to be SELECT statements only
 
-[Unreleased]: https://github.com/jwmoss/notesctl/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/jwmoss/notesctl/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/jwmoss/notesctl/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/jwmoss/notesctl/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/jwmoss/notesctl/releases/tag/v1.0.0
