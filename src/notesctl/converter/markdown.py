@@ -52,9 +52,20 @@ class MarkdownConverter:
             parts.append(f"# {note.title}")
             parts.append("")
 
+        # Filter out duplicate title paragraph if we're already including the title
+        paragraphs_to_convert = parsed.paragraphs
+        if self.options.include_title_heading and paragraphs_to_convert:
+            first_para = paragraphs_to_convert[0]
+            # Skip first paragraph if it's a title that matches the note title
+            if (
+                first_para.style == StyleType.TITLE
+                and first_para.plain_text.strip() == note.title.strip()
+            ):
+                paragraphs_to_convert = paragraphs_to_convert[1:]
+
         # Convert paragraphs
         attachment_map = {a.identifier: a for a in (attachments or [])}
-        converted_paragraphs = self._convert_paragraphs(parsed.paragraphs, attachment_map)
+        converted_paragraphs = self._convert_paragraphs(paragraphs_to_convert, attachment_map)
         parts.extend(converted_paragraphs)
 
         return "\n".join(parts)
