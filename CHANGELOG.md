@@ -12,10 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial release
-- `notex export` command to export notes to Markdown files
-- `notex list-notes` command to list notes in the database
-- `notex list-folders` command to list folders
-- `notex stats` command to show database statistics
+- `notesctl export` command to export notes to Markdown files
+- `notesctl list-notes` command to list notes in the database
+- `notesctl list-folders` command to list folders
+- `notesctl stats` command to show database statistics
 - Safe database access with copy-first approach
 - Read-only SQLite connection (mode=ro)
 - SELECT-only query validation
@@ -34,5 +34,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Original Notes database is never modified
 - All queries validated to be SELECT statements only
 
-[Unreleased]: https://github.com/jwmoss/notex/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/jwmoss/notex/releases/tag/v0.1.0
+[Unreleased]: https://github.com/jwmoss/notesctl/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/jwmoss/notesctl/releases/tag/v0.1.0

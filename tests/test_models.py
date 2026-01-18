@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from notex.database.models import Attachment, Folder, Note
+from notesctl.database.models import Attachment, Folder, Note
 
 
 class TestNote:

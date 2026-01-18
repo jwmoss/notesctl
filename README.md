@@ -1,4 +1,4 @@
-# notex
+# notesctl
 
 Export Apple iCloud Notes to Markdown files safely.
 
@@ -22,22 +22,22 @@ uv pip install -e ".[dev]"
 
 ```bash
 # Export all notes
-uv run notex export -o ~/notes-backup
+uv run notesctl export -o ~/notes-backup
 
 # Export specific folder
-uv run notex export --folder "Work" -o ~/work-notes
+uv run notesctl export --folder "Work" -o ~/work-notes
 
 # Preview without writing (safe)
-uv run notex export --dry-run
+uv run notesctl export --dry-run
 
 # List notes
-uv run notex list-notes
+uv run notesctl list-notes
 
 # List folders
-uv run notex list-folders
+uv run notesctl list-folders
 
 # Show statistics
-uv run notex stats
+uv run notesctl stats
 ```
 
 ## Safety

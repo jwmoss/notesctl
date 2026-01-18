@@ -1,4 +1,4 @@
-"""Command-line interface for notex."""
+"""Command-line interface for notesctl."""
 
 from pathlib import Path
 from typing import Annotated
@@ -11,7 +11,7 @@ from rich.table import Table
 from .exporter import ExportOptions, NotesExporter
 
 app = typer.Typer(
-    name="notex",
+    name="notesctl",
     help="Export Apple iCloud Notes to Markdown files.",
     no_args_is_help=True,
 )

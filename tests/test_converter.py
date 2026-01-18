@@ -4,9 +4,9 @@ from datetime import datetime
 
 import pytest
 
-from notex.converter.markdown import MarkdownConverter, MarkdownOptions
-from notex.database.models import Attachment, Note
-from notex.parser.note_parser import Paragraph, ParsedNote, StyleType, TextRun
+from notesctl.converter.markdown import MarkdownConverter, MarkdownOptions
+from notesctl.database.models import Attachment, Note
+from notesctl.parser.note_parser import Paragraph, ParsedNote, StyleType, TextRun
 
 
 class TestMarkdownConverter:

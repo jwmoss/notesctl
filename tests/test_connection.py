@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from notex.database.connection import SafeNotesDatabase
+from notesctl.database.connection import SafeNotesDatabase
 
 
 class TestSafeNotesDatabase:

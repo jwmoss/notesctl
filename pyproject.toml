@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "notex"
+name = "notesctl"
 version = "0.1.0"
 description = "Export Apple iCloud Notes to Markdown files safely"
 readme = "README.md"
@@ -31,11 +31,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/jwmoss/notex"
-Repository = "https://github.com/jwmoss/notex"
-Documentation = "https://github.com/jwmoss/notex#readme"
-Issues = "https://github.com/jwmoss/notex/issues"
-Changelog = "https://github.com/jwmoss/notex/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/jwmoss/notesctl"
+Repository = "https://github.com/jwmoss/notesctl"
+Documentation = "https://github.com/jwmoss/notesctl#readme"
+Issues = "https://github.com/jwmoss/notesctl/issues"
+Changelog = "https://github.com/jwmoss/notesctl/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
@@ -49,10 +49,10 @@ dev = [
 ]
 
 [project.scripts]
-notex = "notex.cli:app"
+notesctl = "notesctl.cli:app"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/notex"]
+packages = ["src/notesctl"]
 
 [tool.ruff]
 line-length = 100
@@ -109,7 +109,7 @@ ignore = [
 "*_pb2.py" = ["ALL"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["notex"]
+known-first-party = ["notesctl"]
 
 [tool.mypy]
 python_version = "3.11"
@@ -128,7 +128,7 @@ follow_imports = "normal"
 ignore_missing_imports = false
 
 [[tool.mypy.overrides]]
-module = "notex.parser.protobuf.*"
+module = "notesctl.parser.protobuf.*"
 ignore_errors = true
 
 [tool.pytest.ini_options]
@@ -144,9 +144,9 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ["src/notex"]
+source = ["src/notesctl"]
 branch = true
-omit = ["src/notex/parser/protobuf/*"]
+omit = ["src/notesctl/parser/protobuf/*"]
 
 [tool.coverage.report]
 exclude_lines = [

@@ -4,7 +4,7 @@ import gzip
 
 import pytest
 
-from notex.parser.note_parser import NoteParser, ParsedNote, StyleType
+from notesctl.parser.note_parser import NoteParser, ParsedNote, StyleType
 
 
 class TestNoteParser:
@@ -41,7 +41,7 @@ class TestNoteParser:
 
     def test_parsed_note_plain_text(self):
         """Test ParsedNote plain_text property."""
-        from notex.parser.note_parser import Paragraph, TextRun
+        from notesctl.parser.note_parser import Paragraph, TextRun
 
         note = ParsedNote(
             title="Test",
