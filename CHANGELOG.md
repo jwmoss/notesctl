@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-01-17
+
+### Fixed
+
+- Fixed mypy strict type checking errors across database and parser modules
+- Added proper type annotations for tuple parameters and return types
+- Fixed type-checking imports to satisfy ruff TC rules
+
 ## [1.0.0] - 2026-01-17
 
 ### Added
@@ -34,5 +42,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Original Notes database is never modified
 - All queries validated to be SELECT statements only
 
-[Unreleased]: https://github.com/jwmoss/notesctl/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/jwmoss/notesctl/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/jwmoss/notesctl/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/jwmoss/notesctl/releases/tag/v1.0.0

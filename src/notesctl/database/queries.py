@@ -1,10 +1,15 @@
 """SQL queries for reading Apple Notes data (SELECT only)."""
 
+from __future__ import annotations
+
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
-from .connection import SafeNotesDatabase
 from .models import Attachment, Folder, Note
+
+if TYPE_CHECKING:
+    from .connection import SafeNotesDatabase
 
 # Apple's Core Data timestamp epoch (2001-01-01 00:00:00 UTC)
 APPLE_EPOCH = datetime(2001, 1, 1, tzinfo=UTC)
@@ -114,7 +119,7 @@ class NotesQueries:
         WHERE n.ZTITLE1 IS NOT NULL
         """
 
-        params: list = []
+        params: list[Any] = []
 
         if folder_id is not None:
             query += " AND n.ZFOLDER = ?"

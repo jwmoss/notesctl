@@ -1,13 +1,18 @@
 """Safe read-only database connection for Apple Notes."""
 
+from __future__ import annotations
+
 import shutil
 import sqlite3
 import tempfile
-from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
 from rich.console import Console
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 console = Console()
 
@@ -100,7 +105,7 @@ class SafeNotesDatabase:
             raise RuntimeError("Database not connected. Call connect() first.")
         return self._connection
 
-    def execute(self, query: str, params: tuple = ()) -> sqlite3.Cursor:
+    def execute(self, query: str, params: tuple[Any, ...] = ()) -> sqlite3.Cursor:
         """
         Execute a SELECT query safely.
 
@@ -121,20 +126,26 @@ class SafeNotesDatabase:
 
         return self.connection.execute(query, params)
 
-    def fetchall(self, query: str, params: tuple = ()) -> list[sqlite3.Row]:
+    def fetchall(self, query: str, params: tuple[Any, ...] = ()) -> list[sqlite3.Row]:
         """Execute a query and fetch all results."""
-        return self.execute(query, params).fetchall()
+        return list(self.execute(query, params).fetchall())
 
-    def fetchone(self, query: str, params: tuple = ()) -> sqlite3.Row | None:
+    def fetchone(self, query: str, params: tuple[Any, ...] = ()) -> sqlite3.Row | None:
         """Execute a query and fetch one result."""
-        return self.execute(query, params).fetchone()
+        result: sqlite3.Row | None = self.execute(query, params).fetchone()
+        return result
 
-    def __enter__(self) -> "SafeNotesDatabase":
+    def __enter__(self) -> SafeNotesDatabase:
         """Context manager entry."""
         self.connect()
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: Any,
+    ) -> None:
         """Context manager exit."""
         self.close()
 

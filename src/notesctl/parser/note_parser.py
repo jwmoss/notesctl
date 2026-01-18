@@ -1,10 +1,13 @@
 """Parser for Apple Notes gzip-compressed protobuf content."""
 
+from __future__ import annotations
+
 import gzip
 from dataclasses import dataclass, field
 from enum import IntEnum
+from typing import Any
 
-from .protobuf.notestore_pb2 import NoteStoreProto
+from .protobuf.notestore_pb2 import NoteStoreProto  # type: ignore[attr-defined]
 
 
 class StyleType(IntEnum):
@@ -69,7 +72,7 @@ class ParsedNote:
 class NoteParser:
     """Parser for Apple Notes protobuf content."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the parser."""
         self._numbered_list_counters: dict[int, int] = {}
 
@@ -104,7 +107,7 @@ class NoteParser:
 
         return self._parse_proto(proto, title)
 
-    def _parse_proto(self, proto: NoteStoreProto, title: str) -> ParsedNote:
+    def _parse_proto(self, proto: Any, title: str) -> ParsedNote:
         """Parse the protobuf message into structured content."""
         note = ParsedNote(title=title)
 
