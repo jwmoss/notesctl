@@ -156,6 +156,7 @@ def list_notes(
             "--limit",
             "-l",
             help="Maximum number of notes to show",
+            min=1,
         ),
     ] = 50,
     db_path: Annotated[

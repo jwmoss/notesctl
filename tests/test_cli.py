@@ -37,3 +37,13 @@ def test_export_exits_nonzero_when_notes_fail(monkeypatch):
     assert result.exit_code == 1
     assert "Failed to export 1 notes" in result.output
     assert "boom" in result.output
+
+
+def test_list_notes_rejects_negative_limit():
+    """Negative limits should fail CLI validation before rendering notes."""
+    result = runner.invoke(app, ["list-notes", "--limit", "-1"])
+
+    assert result.exit_code != 0
+    assert "Invalid value" in result.output
+    assert "Showing -1" not in result.output
+    assert "Notes (" not in result.output
