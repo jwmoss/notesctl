@@ -129,6 +129,9 @@ def export(
         for error in result.errors[:10]:
             console.print(f"  {error}")
 
+    if not dry_run and (result.skipped_errors or result.errors):
+        raise typer.Exit(1)
+
 
 @app.command("list-notes")
 def list_notes(
