@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-06-08
+
+### Fixed
+
+- `export` now exits with a non-zero status when notes are skipped due to errors, so backup and automation workflows no longer treat an incomplete export as successful
+- `list-notes --limit` rejects values below 1, preventing negative limits from hiding notes and printing a misleading "Showing -1 of N notes" count
+
 ## [1.0.2] - 2026-01-17
 
 ### Fixed
@@ -50,7 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Original Notes database is never modified
 - All queries validated to be SELECT statements only
 
-[Unreleased]: https://github.com/jwmoss/notesctl/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/jwmoss/notesctl/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/jwmoss/notesctl/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/jwmoss/notesctl/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/jwmoss/notesctl/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/jwmoss/notesctl/releases/tag/v1.0.0
