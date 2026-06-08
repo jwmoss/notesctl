@@ -129,6 +129,9 @@ def export(
         for error in result.errors[:10]:
             console.print(f"  {error}")
 
+    if not dry_run and (result.skipped_errors or result.errors):
+        raise typer.Exit(1)
+
 
 @app.command("list-notes")
 def list_notes(
@@ -153,6 +156,7 @@ def list_notes(
             "--limit",
             "-l",
             help="Maximum number of notes to show",
+            min=1,
         ),
     ] = 50,
     db_path: Annotated[
