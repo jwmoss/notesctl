@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-10
+
+- Add version aliases and machine-readable doctor output.
+- Send errors and progress to stderr; preserve read-only source access.
+- Replace synthetic suites with real Notes checks and static package validation.
+- Keep package and CLI version metadata consistent.
+
 ## [1.0.3] - 2026-06-08
 
 ### Fixed
@@ -57,7 +64,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Original Notes database is never modified
 - All queries validated to be SELECT statements only
 
-[Unreleased]: https://github.com/jwmoss/notesctl/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/jwmoss/notesctl/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/jwmoss/notesctl/compare/v1.0.3...v1.1.0
 [1.0.3]: https://github.com/jwmoss/notesctl/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/jwmoss/notesctl/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/jwmoss/notesctl/compare/v1.0.0...v1.0.1
