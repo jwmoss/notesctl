@@ -14,15 +14,11 @@ uv run notesctl list-notes
 uv run notesctl list-folders
 uv run notesctl stats
 
-# Run tests
-uv run pytest                           # all tests
-uv run pytest tests/test_parser.py      # single file
-uv run pytest -k "test_name"            # single test by name
+# Static checks and package build
+make check
 
-# Linting and type checking
-uv run ruff check src tests             # lint
-uv run ruff format src tests            # format
-uv run ty check                          # type check
+# Actual local Apple Notes reads (requires macOS database access)
+make test
 ```
 
 ## Architecture
@@ -61,3 +57,6 @@ The tool is designed to never modify the original Notes database:
 ### Protobuf Files
 
 The `parser/protobuf/notestore_pb2.py` is auto-generated and excluded from ty/ruff checks. The protobuf schema defines how Apple Notes stores note content (text, formatting, attachments).
+
+Keep only real end-to-end CLI tests and static checks. Do not add unit or mock tests.
+Live checks must not write to the source Notes database.

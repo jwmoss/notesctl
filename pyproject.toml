@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "notesctl"
-version = "1.0.3"
+version = "1.1.0"
 description = "Export Apple iCloud Notes to Markdown files safely"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -39,8 +39,6 @@ Changelog = "https://github.com/jwmoss/notesctl/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
     "ruff>=0.8.0",
     "ty>=0.0.1",
     "grpcio-tools>=1.60.0",
@@ -55,7 +53,7 @@ packages = ["src/notesctl"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["src", "tests"]
+src = ["src"]
 
 [tool.ruff.lint]
 select = [
@@ -103,7 +101,6 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101", "ARG", "PLR2004", "DTZ", "SIM105", "PLC0415", "SLF001", "SIM117"]
 "*_pb2.py" = ["ALL"]
 
 [tool.ruff.lint.isort]
@@ -113,7 +110,7 @@ known-first-party = ["notesctl"]
 python-version = "3.11"
 
 [tool.ty.src]
-include = ["src", "tests"]
+include = ["src"]
 exclude = ["*_pb2.py"]
 
 [[tool.ty.overrides]]
@@ -128,28 +125,3 @@ missing-argument = "ignore"
 too-many-positional-arguments = "ignore"
 invalid-return-type = "ignore"
 unresolved-attribute = "ignore"
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["src"]
-addopts = [
-    "-v",
-    "--tb=short",
-    "--strict-markers",
-]
-markers = [
-    "slow: marks tests as slow",
-]
-
-[tool.coverage.run]
-source = ["src/notesctl"]
-branch = true
-omit = ["src/notesctl/parser/protobuf/*"]
-
-[tool.coverage.report]
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "raise NotImplementedError",
-    "if TYPE_CHECKING:",
-]

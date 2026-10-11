@@ -4,65 +4,25 @@ on:
   push:
     branches: [master, main]
   pull_request:
-    branches: [master, main]
+
+permissions:
+  contents: read
 
 jobs:
-  test:
+  check:
     runs-on: macos-latest
+    timeout-minutes: 15
     strategy:
       matrix:
-        python-version: ["3.11", "3.12", "3.13"]
-
+        python: ["3.11", "3.12", "3.13"]
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python ${{ matrix.python-version }}
-        run: uv python install ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        run: uv sync --all-extras
-
-      - name: Run tests
-        run: uv run pytest tests/ -v --tb=short
-
-  type-check:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python
-        run: uv python install 3.12
-
-      - name: Install dependencies
-        run: uv sync --all-extras
-
-      - name: Run type checker
-        run: uv run ty check
-
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python
-        run: uv python install 3.12
-
-      - name: Install ruff
-        run: uv tool install ruff
-
-      - name: Run ruff check
-        run: ruff check src/notesctl/ tests/
-
-      - name: Run ruff format check
-        run: ruff format --check src/notesctl/ tests/
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Static checks and package build
+        run: make check
+      - name: Check installed CLI
+        run: uv run --locked --no-config notesctl --version
