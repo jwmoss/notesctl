@@ -1,5 +1,7 @@
 """Command-line interface for notesctl."""
 
+import json
+from importlib.metadata import version as package_version
 from pathlib import Path
 from typing import Annotated
 
@@ -14,8 +16,28 @@ app = typer.Typer(
     name="notesctl",
     help="Export Apple iCloud Notes to Markdown files.",
     no_args_is_help=True,
+    invoke_without_command=True,
 )
 console = Console()
+error_console = Console(stderr=True)
+
+
+@app.command("version")
+def version() -> None:
+    """Print version information."""
+    typer.echo(f"notesctl, version {package_version('notesctl')}")
+
+
+@app.callback()
+def root(
+    show_version: Annotated[
+        bool, typer.Option("--version", is_eager=True, help="Print version information")
+    ] = False,
+) -> None:
+    """Export Apple Notes through read-only database access."""
+    if show_version:
+        version()
+        raise typer.Exit
 
 
 @app.command()
@@ -93,14 +115,14 @@ def export(
         with Progress(
             SpinnerColumn(),
             TextColumn("[progress.description]{task.description}"),
-            console=console,
+            console=error_console,
         ) as progress:
             result = exporter.export(options, progress)
     except FileNotFoundError as e:
-        console.print(f"[red]Error:[/red] {e}")
+        error_console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from None
     except Exception as e:
-        console.print(f"[red]Error:[/red] {e}")
+        error_console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from None
 
     # Print results
@@ -119,15 +141,15 @@ def export(
         console.print(f"  Attachments copied: {result.attachments_copied}")
 
     if result.skipped_encrypted:
-        console.print(f"[yellow]Skipped {result.skipped_encrypted} encrypted notes[/yellow]")
+        error_console.print(f"[yellow]Skipped {result.skipped_encrypted} encrypted notes[/yellow]")
 
     if result.skipped_errors:
-        console.print(f"[red]Failed to export {result.skipped_errors} notes[/red]")
+        error_console.print(f"[red]Failed to export {result.skipped_errors} notes[/red]")
 
     if result.errors:
-        console.print("\n[red]Errors:[/red]")
+        error_console.print("\n[red]Errors:[/red]")
         for error in result.errors[:10]:
-            console.print(f"  {error}")
+            error_console.print(f"  {error}")
 
     if not dry_run and (result.skipped_errors or result.errors):
         raise typer.Exit(1)
@@ -174,10 +196,10 @@ def list_notes(
     try:
         notes = exporter.list_notes(folder, include_trashed)
     except FileNotFoundError as e:
-        console.print(f"[red]Error:[/red] {e}")
+        error_console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from None
     except Exception as e:
-        console.print(f"[red]Error:[/red] {e}")
+        error_console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from None
 
     if not notes:
@@ -231,10 +253,10 @@ def list_folders(
     try:
         folders = exporter.list_folders()
     except FileNotFoundError as e:
-        console.print(f"[red]Error:[/red] {e}")
+        error_console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from None
     except Exception as e:
-        console.print(f"[red]Error:[/red] {e}")
+        error_console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from None
 
     if not folders:
@@ -251,8 +273,12 @@ def list_folders(
     console.print(table)
 
 
+@app.command("doctor")
 @app.command("stats")
 def stats(
+    json_output: Annotated[
+        bool, typer.Option("--json", help="Print database counts as JSON")
+    ] = False,
     db_path: Annotated[
         Path | None,
         typer.Option(
@@ -268,11 +294,15 @@ def stats(
     try:
         db_stats = exporter.get_stats()
     except FileNotFoundError as e:
-        console.print(f"[red]Error:[/red] {e}")
+        error_console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from None
     except Exception as e:
-        console.print(f"[red]Error:[/red] {e}")
+        error_console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from None
+
+    if json_output:
+        typer.echo(json.dumps(db_stats))
+        return
 
     console.print("[bold]Notes Database Statistics[/bold]\n")
     console.print(f"  Total notes: {db_stats['total_notes']}")
